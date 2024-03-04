@@ -3,7 +3,7 @@
 import { z } from "zod"
 
 export const formSchema = z.object({
-  username: z.string().min(2, {
+ username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }).max(50),
   useremail: z.string().min(2, {
@@ -15,5 +15,8 @@ export const formSchema = z.object({
   country:  z
   .string({
     required_error: "Please select a country.",
+  }),
+  state:  z.string({
+    required_error: "Please select a state.",
   })
 })
