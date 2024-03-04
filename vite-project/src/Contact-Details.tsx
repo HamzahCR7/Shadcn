@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+// import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -8,6 +10,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { useForm } from "react-hook-form"
@@ -17,6 +26,8 @@ import { formSchema } from "./ContactSchema";
 import './Contact-Details.css'
 
 function ContactDetails() {
+  const [selectedOption, setSelectedOption] = useState('');
+  const [validationResult, setValidationResult] = useState({ success: true, error: null });
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -29,6 +40,9 @@ function ContactDetails() {
         // ✅ This will be type-safe and validated.
         console.log(values)
       }
+
+    
+      // Function to handle the change in dropdown value
     
   return (
     <>
@@ -96,6 +110,28 @@ function ContactDetails() {
               </FormItem>
           )}
           />
+       <FormField
+          control={form.control}
+          name="country"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Country of your residence" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="India">India</SelectItem>
+                  <SelectItem value="Aus">Australia</SelectItem>
+                  <SelectItem value="PR">Portugal</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit" className="mt-2 submit">Submit</Button>
       </form>
     </Form>
